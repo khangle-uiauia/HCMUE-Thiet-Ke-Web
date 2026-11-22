@@ -1,0 +1,30 @@
+:root { --nen: #f3f1ec; --chu: #1e2a33; --nhan: #0d6f9e; --vang: #ffd54a; }
+
+* { box-sizing: border-box; }
+
+body { margin: 0; min-height: 100vh; background: var(--nen); color: var(--chu);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif; line-height: 1.55; }
+
+#dau { padding: 56px 20px 28px; text-align: center; }
+#dau h1 { margin: 0; font-size: clamp(1.7rem, 4.5vw, 2.6rem); }
+#dau p { margin: 8px 0 0; color: #5a6670; }
+
+#danhsach { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px;
+  max-width: 960px; margin: 0 auto; padding: 16px 20px 40px; }
+
+.the { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: #fff;
+  border-radius: 16px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,.12);
+  transition: transform .2s ease, box-shadow .2s ease; }
+.the:hover { transform: translateY(-5px); box-shadow: 0 10px 28px rgba(0,0,0,.2); }
+.the:focus-visible { outline: 3px solid var(--nhan); outline-offset: 3px; }
+
+.the img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: #cfd6db; }
+
+.noidung { display: flex; flex-direction: column; flex: 1; padding: 20px 22px 22px; }
+.nhan { align-self: flex-start; padding: 2px 12px; border-radius: 999px; background: var(--vang); font-size: .8rem; font-weight: 600; }
+.noidung h2 { margin: 10px 0 6px; font-size: 1.4rem; }
+.noidung p { margin: 0 0 16px; color: #46525b; font-size: .95rem; }
+.xem { margin-top: auto; color: var(--nhan); font-weight: 600; }
+.the:hover .xem { text-decoration: underline; }
+
+#chan { padding: 0 20px 40px; text-align: center; color: #6a757d; font-size: .9rem; }

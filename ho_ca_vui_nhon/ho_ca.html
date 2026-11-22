@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <title>Hồ cá vui nhộn</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="mystyle.css">
+</head>
+
+<body>
+<div id="content">
+  <div class="bg show" id="bgA"></div>
+  <div class="bg" id="bgB"></div>
+
+  <h1 id="tieude">Hồ cá vui nhộn</h1>
+
+  <div id="controls">
+    <a class="nut" href="../index.html">← Trang chủ</a>
+    <button type="button" class="nut" id="btnBg">Đổi cảnh nền</button>
+    <button type="button" class="nut" id="btnMusic" aria-pressed="false">Phát nhạc</button>
+  </div>
+
+  <div id="bubbles" aria-hidden="true">
+    <span class="bubble" style="--x:83vw; --s:15px; --t:18s; --d:-6s"></span>
+    <span class="bubble" style="--x:32vw; --s:20px; --t:20s; --d:-7s"></span>
+    <span class="bubble" style="--x:27vw; --s:24px; --t:16s; --d:-11s"></span>
+    <span class="bubble" style="--x:95vw; --s:8px; --t:9s; --d:-8s"></span>
+    <span class="bubble" style="--x:62vw; --s:16px; --t:12s; --d:-11s"></span>
+    <span class="bubble" style="--x:59vw; --s:19px; --t:14s; --d:-2s"></span>
+    <span class="bubble" style="--x:30vw; --s:11px; --t:12s; --d:-15s"></span>
+    <span class="bubble" style="--x:27vw; --s:18px; --t:12s; --d:-15s"></span>
+    <span class="bubble" style="--x:81vw; --s:8px; --t:16s; --d:-11s"></span>
+    <span class="bubble" style="--x:84vw; --s:10px; --t:19s; --d:-3s"></span>
+    <span class="bubble" style="--x:51vw; --s:14px; --t:16s; --d:-5s"></span>
+    <span class="bubble" style="--x:57vw; --s:18px; --t:10s; --d:-12s"></span>
+    <span class="bubble" style="--x:61vw; --s:20px; --t:20s; --d:-2s"></span>
+    <span class="bubble" style="--x:94vw; --s:13px; --t:11s; --d:-4s"></span>
+    <span class="bubble" style="--x:5vw; --s:12px; --t:18s; --d:-14s"></span>
+    <span class="bubble" style="--x:85vw; --s:12px; --t:18s; --d:-15s"></span>
+    <span class="bubble" style="--x:86vw; --s:19px; --t:11s; --d:-17s"></span>
+    <span class="bubble" style="--x:72vw; --s:12px; --t:9s; --d:-0s"></span>
+  </div>
+
+  <div id="goldfish" class="swimmer"><img src="images/goldFishSchool.png" alt="Đàn cá vàng"></div>
+  <div id="faint"    class="swimmer"><img src="images/faintSchool.png" alt="Đàn cá nhỏ"></div>
+  <div id="turtle"   class="swimmer"><img src="images/turtle.png" alt="Con rùa"></div>
+  <div id="diver1"   class="swimmer"><img src="images/diver1.png" alt="Thợ lặn 1"></div>
+  <div id="diver2"   class="swimmer"><img src="images/diver2.png" alt="Thợ lặn 2"></div>
+  <div id="diver3"   class="swimmer"><img src="images/diver3.png" alt="Thợ lặn 3"></div>
+  <div id="shark"    class="swimmer"><img src="images/shark.png" alt="Cá mập"></div>
+</div>
+
+<div id="ytplayer"></div>
+
+<script>
+  var nen = ["images/bg1.svg", "images/bg2.svg", "images/bg3.svg", "images/bg4.svg"];
+  var layers = [document.getElementById("bgA"), document.getElementById("bgB")];
+  var viTri = 0, lop = 0;
+  layers[0].style.backgroundImage = "url(" + nen[0] + ")";
+
+  document.getElementById("btnBg").addEventListener("click", function () {
+    viTri = (viTri + 1) % nen.length;
+    var cu = layers[lop];
+    lop = 1 - lop;
+    var moi = layers[lop];
+    moi.style.backgroundImage = "url(" + nen[viTri] + ")";
+    moi.classList.add("show");
+    cu.classList.remove("show");
+  });
+
+  var VIDEO_ID = "uU2n9yk37GQ";
+  var btnMusic = document.getElementById("btnMusic");
+  var player = null, sanSang = false, dangPhat = false;
+
+  function capNhatNut() {
+    btnMusic.textContent = dangPhat ? "Ngừng nhạc" : "Phát nhạc";
+    btnMusic.setAttribute("aria-pressed", dangPhat ? "true" : "false");
+  }
+
+  var tag = document.createElement("script");
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(tag);
+
+  window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player("ytplayer", {
+      width: "200", height: "200", videoId: VIDEO_ID,
+      playerVars: { controls: 0, loop: 1, playlist: VIDEO_ID, playsinline: 1 },
+      events: {
+        onReady: function () { sanSang = true; },
+        onError: function () { dangPhat = false; btnMusic.textContent = "Không phát được nhạc"; }
+      }
+    });
+  };
+
+  btnMusic.addEventListener("click", function () {
+    if (!sanSang) { btnMusic.textContent = "Đang tải nhạc..."; return; }
+    if (dangPhat) { player.pauseVideo(); } else { player.playVideo(); }
+    dangPhat = !dangPhat;
+    capNhatNut();
+  });
+</script>
+</body>
+</html>
